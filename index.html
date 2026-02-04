@@ -1176,16 +1176,12 @@
     </script>
 
     <script>
-        // Load mobile-friendly video for mobile devices
+        // Use mobile-friendly video for all devices (temporarily)
+        // Desktop video is too large for GitHub Pages
         (function() {
-            const video = document.getElementById('heroVideo');
             const videoSource = document.getElementById('videoSource');
-            const isMobile = window.innerWidth <= 768;
-
-            if (isMobile) {
-                videoSource.src = 'mobilefriendlySORELLA.mov';
-                video.load();
-            }
+            videoSource.src = 'mobilefriendlySORELLA.mov';
+            document.getElementById('heroVideo').load();
         })();
     </script>
 
