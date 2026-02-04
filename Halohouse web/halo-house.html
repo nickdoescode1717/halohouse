@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halo House — Event Planning & Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #F5F1E8;
+            --dark: #2A2520;
+            --accent: #8B7355;
+            --light-accent: #C4B5A0;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            background: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(42, 37, 32, 0.7) 0%, rgba(42, 37, 32, 0) 100%);
+            transition: all 0.5s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(245, 241, 232, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 4rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            height: 50px;
+            transition: opacity 0.5s ease;
+        }
+
+        .logo img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        nav.scrolled .logo {
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav.scrolled .nav-links a {
+            color: var(--dark);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%);
+            z-index: 1;
+        }
+
+        .video-container video,
+        .video-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            color: var(--white);
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .hero-title {
+            margin-bottom: 1rem;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .hero-title img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.95;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 50px;
+            background: var(--white);
+            margin: 0 auto 10px;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            padding: 8rem 4rem;
+            text-align: center;
+            background: var(--white);
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .quote-section.visible {
+            animation-play-state: running;
+        }
+
+        .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.4;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            font-style: italic;
+        }
+
+        .quote em {
+            font-weight: 400;
+            color: var(--accent);
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 300;
+        }
+
+        /* About Section */
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .about-section.visible {
+            animation-play-state: running;
+        }
+
+        .about-image {
+    background: url('aboutus.webp');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+        .about-content {
+            padding: 8rem 6rem;
+            background: var(--cream);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.5rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            line-height: 1;
+        }
+
+        .about-text {
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            color: var(--dark);
+            opacity: 0.9;
+        }
+
+        .about-text strong {
+            font-weight: 400;
+            color: var(--dark);
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2.5rem;
+            background: var(--dark);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: all 0.4s ease;
+            border-radius: 2px;
+            align-self: flex-start;
+        }
+
+        .cta-button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 8rem 4rem;
+            background: var(--white);
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .services-section.visible {
+            animation-play-state: running;
+        }
+
+        .services-header {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto 6rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-image {
+            background: url('completesupport.PNG');
+            background-size: cover;
+            background-position: center;
+            min-height: 600px;
+        }
+
+        .service-content {
+            padding: 6rem;
+            background: var(--cream);
+        }
+
+        .service-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+
+        .service-subtitle {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(42, 37, 32, 0.1);
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .service-list li:last-child {
+            border-bottom: none;
+        }
+
+        .service-note {
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(42, 37, 32, 0.2);
+            font-size: 0.9rem;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .service-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-style: italic;
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--accent);
+        }
+
+        /* Behind Section */
+        .behind-section {
+            padding: 8rem 4rem;
+            background: var(--dark);
+            color: var(--white);
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .behind-section.visible {
+            animation-play-state: running;
+        }
+
+        .behind-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .behind-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            color: var(--light-accent);
+        }
+
+        .behind-text {
+            font-size: 1.05rem;
+            line-height: 2;
+            font-weight: 300;
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 8rem 4rem;
+            background: var(--cream);
+            animation: fadeIn 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .contact-section.visible {
+            animation-play-state: running;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .contact-detail {
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .contact-value {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .contact-value a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-value a:hover {
+            color: var(--accent);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            font-weight: 400;
+            color: var(--dark);
+        }
+
+        .form-input,
+        .form-textarea {
+            padding: 1rem;
+            border: 1px solid rgba(42, 37, 32, 0.2);
+            background: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .form-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .form-checkbox-label {
+            font-size: 0.85rem;
+            font-weight: 300;
+            cursor: pointer;
+        }
+
+        .form-submit {
+            padding: 1.2rem 3rem;
+            background: var(--dark);
+            color: var(--white);
+            border: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border-radius: 2px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-submit:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-note {
+            font-size: 0.9rem;
+            font-style: italic;
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem;
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--light-accent);
+            font-weight: 400;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            font-size: 0.9rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--light-accent);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            font-weight: 300;
+            opacity: 0.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .hero-title {
+                max-width: 450px;
+            }
+
+            .about-section,
+            .services-grid,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .service-content,
+            .about-content {
+                padding: 4rem 3rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                height: 40px;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.75rem;
+            }
+
+            .hero-title {
+                max-width: 300px;
+            }
+
+            .hero-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .quote {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 3rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .quote-section,
+            .services-section,
+            .behind-section,
+            .contact-section {
+                padding: 4rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="nav">
+        <div class="logo">
+            <img src="hh transparent.png" alt="Halo House">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="video-container">
+    <video autoplay muted loop playsinline>
+        <source src="SORELLA.mp4" type="video/mp4">
+        <!-- Fallback image if video doesn't load -->
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23C4B5A0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%238B7355;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1920' height='1080' fill='url(%23grad)'/%3E%3C/svg%3E" alt="Halo House Wedding">
+    </video>
+</div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <img src="halo house transparent.png" alt="Halo House">
+            </h1>
+            <p class="hero-subtitle">Event Planning & Design</p>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section" id="quote">
+        <p class="quote">"The event should <em>feel</em> as good as it looks."</p>
+        <p class="quote-author">— halo house</p>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-image">
+            <!-- Add actual image in production -->
+        </div>
+        <div class="about-content">
+            <h2 class="section-title">About Us</h2>
+            <p class="about-text"><strong>Certified by the Wedding Planners Institute of Canada and owners of Sorella 1881, wedding venue.</strong></p>
+            <p class="about-text">We're not just wedding planners, we're venue owners. We live and breathe weddings, which gives us a unique perspective.</p>
+            <p class="about-text">We've personally coordinated with vendors, solved last-minute challenges, and ensured events run seamlessly. Now, we bring that expertise directly to couples at our venue and beyond.</p>
+            <p class="about-text">Our approach blends design-forward details with effortless hospitality. Weddings aren't just about how they look... they're about how they make you and your guests feel.</p>
+            <a href="#contact" class="cta-button">Learn more</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="services-header">
+            <h2 class="section-title">Full Planning & Design</h2>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-image">
+                <!-- Add actual image in production -->
+            </div>
+            <div class="service-content">
+                <h3 class="service-title">Complete Support</h3>
+                <p class="service-subtitle">For the couple who wants complete support from start to finish...</p>
+                
+                <h4 style="font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; font-weight: 400;">Service Includes</h4>
+                
+                <ul class="service-list">
+                    <li>Vendor sourcing & management (Including catering, DJ & Entertainment, Officiant, Hair & Makeup, Rentals, Cake, Invitations, Stationery, Floral, Photo & Video)</li>
+                    <li>Wedding design concept & styling guidance</li>
+                    <li>Monthly planning check-ins</li>
+                    <li>Budget & Timeline management</li>
+                    <li>Booking vendor meetings & site visits</li>
+                    <li>RSVP & guest list coordination</li>
+                    <li>Design development</li>
+                    <li>Rehearsal walk through & full-day coordination</li>
+                    <li>Setup & teardown</li>
+                    <li>1 Lead Planner & assistant</li>
+                </ul>
+                
+                <p class="service-note">Inquire for pricing.</p>
+            </div>
+        </div>
+        
+        <p class="service-tagline">You dream. We handle everything else.</p>
+    </section>
+
+    <!-- Behind Section -->
+    <section class="behind-section" id="behind">
+        <div class="behind-content">
+            <h2 class="behind-title">Behind Halo House</h2>
+            <p class="behind-text">Carly and Hayley are visionary sisters and the family owners of Sorella, known for creating weddings that feel effortlessly elegant and deeply personal. Drawing on years of experience running events on their own property, they have developed a reputation for transforming any space into a breathtaking celebration while flawlessly managing even the most complex details. Celebrated for their distinctive design sensibility and thoughtful approach, they specialize in creating highly curated, boutique weddings that reflect each couple's unique style and story. With a calm, attentive presence, Carly and Hayley are trusted by couples who want their wedding day to feel seamless, inspired, and unforgettable...down to the very last touch.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2 class="contact-title">Contact us</h2>
+                
+                <div class="contact-detail">
+                    <div class="contact-label">Location</div>
+                    <div class="contact-value">2024 Third Street Louth,<br>St. Catharines, ON</div>
+                </div>
+                
+                <div class="contact-detail">
+                    <div class="contact-label">Instagram</div>
+                    <div class="contact-value"><a href="https://instagram.com/halohouseevents" target="_blank">@halohouseevents</a></div>
+                </div>
+                
+                <div class="contact-detail">
+                    <div class="contact-label">Contact</div>
+                    <div class="contact-value">
+                        <a href="mailto:halohouseevents@gmail.com">halohouseevents@gmail.com</a><br>
+                        <a href="tel:+19059804855">(905) 980-4855</a>
+                    </div>
+                </div>
+            </div>
+            
+            <form class="contact-form" onsubmit="handleSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name *</label>
+                        <input type="text" class="form-input" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name *</label>
+                        <input type="text" class="form-input" name="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-input" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-checkbox-group">
+                        <input type="checkbox" id="newsletter" class="form-checkbox">
+                        <label for="newsletter" class="form-checkbox-label">Sign up for news and updates</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Message *</label>
+                    <textarea class="form-textarea" name="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="form-submit">Submit</button>
+                
+                <p class="form-note">We will be in touch shortly. We can't wait to hear from you!<br><br>With love,<br>Halo House</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Location</h4>
+                <p>2024 Third Street Louth,<br>St. Catharines, ON</p>
+            </div>
+            <div class="footer-section">
+                <h4>Instagram</h4>
+                <p><a href="https://instagram.com/halohouseevents" target="_blank">@halohouseevents</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>
+                    <a href="mailto:halohouseevents@gmail.com">halohouseevents@gmail.com</a><br>
+                    <a href="tel:+19059804855">(905) 980-4855</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Halo House Events. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your Public Key
+        // Get your key from: https://dashboard.emailjs.com/admin/account
+        (function(){
+            emailjs.init("8stJOBZD0GctfUJLy"); // Replace with your actual public key
+        })();
+    </script>
+
+    <script>
+        // Navbar scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.quote-section, .about-section, .services-section, .behind-section, .contact-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handler with EmailJS
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const submitButton = form.querySelector('.form-submit');
+            
+            // Disable button and show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            
+            // Gather form data
+            const formData = {
+                firstName: form.querySelector('input[name="firstName"]').value,
+                lastName: form.querySelector('input[name="lastName"]').value,
+                email: form.querySelector('input[name="email"]').value,
+                message: form.querySelector('textarea[name="message"]').value,
+                newsletter: form.querySelector('#newsletter').checked ? 'Yes' : 'No'
+            };
+            
+            // Send email using EmailJS
+            // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
+            emailjs.send('service_ftrgl0r', 'template_azdid0t', formData)
+                .then(function() {
+                    // Success
+                    alert('Thank you for your message! We will be in touch shortly.');
+                    form.reset();
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit';
+                }, function(error) {
+                    // Error
+                    console.error('Email send failed:', error);
+                    alert('Oops! Something went wrong. Please email us directly at halohouseevents@gmail.com');
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit';
+                });
+        }
+    </script>
+</body>
+</html>
