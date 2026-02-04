@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Halo House — Event Planning & Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +22,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -100,6 +108,62 @@
 
         .nav-links a:hover::after {
             width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled .mobile-menu-toggle span {
+            background: var(--dark);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        body.menu-open {
+            overflow: hidden;
         }
 
         /* Hero Section */
@@ -385,9 +449,10 @@
 
         /* Behind Section */
         .behind-section {
-            padding: 8rem 4rem;
-            background: var(--dark);
-            color: var(--white);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 100vh;
             animation: fadeIn 1s ease-out;
             animation-fill-mode: both;
         }
@@ -396,10 +461,20 @@
             animation-play-state: running;
         }
 
+        .behind-image {
+            background: url('behindhalo.JPG');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
         .behind-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
+            padding: 8rem 6rem;
+            background: var(--dark);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .behind-title {
@@ -414,8 +489,6 @@
             font-size: 1.05rem;
             line-height: 2;
             font-weight: 300;
-            max-width: 900px;
-            margin: 0 auto;
             opacity: 0.95;
         }
 
@@ -627,6 +700,10 @@
             opacity: 0.6;
         }
 
+        .footer-bottom a:hover {
+            color: var(--light-accent) !important;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -671,13 +748,19 @@
 
             .about-section,
             .services-grid,
+            .behind-section,
             .contact-container {
                 grid-template-columns: 1fr;
             }
 
             .service-content,
-            .about-content {
+            .about-content,
+            .behind-content {
                 padding: 4rem 3rem;
+            }
+
+            .behind-image {
+                min-height: 500px;
             }
 
             .footer-content {
@@ -688,57 +771,219 @@
 
         @media (max-width: 768px) {
             nav {
-                padding: 1rem;
+                padding: 1rem 1.5rem;
             }
 
             .logo {
-                height: 40px;
+                height: 35px;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
             }
 
             .nav-links {
-                gap: 1.5rem;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                max-width: 300px;
+                background: var(--cream);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2.5rem;
+                transition: right 0.4s ease;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
             }
 
             .nav-links a {
-                font-size: 0.75rem;
+                font-size: 1rem;
+                color: var(--dark) !important;
+                padding: 1rem 2rem;
+                min-height: 44px; /* iOS touch target recommendation */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .hero {
+                min-height: 100vh;
+                height: auto;
             }
 
             .hero-title {
-                max-width: 300px;
+                max-width: 280px;
+                padding: 0 1rem;
             }
 
             .hero-subtitle {
-                font-size: 0.85rem;
+                font-size: 0.75rem;
+                letter-spacing: 0.2em;
+                padding: 0 1rem;
+            }
+
+            .scroll-indicator {
+                bottom: 2rem;
+            }
+
+            .scroll-indicator::before {
+                height: 40px;
+            }
+
+            .quote-section {
+                padding: 5rem 1.5rem;
             }
 
             .quote {
-                font-size: 2.5rem;
+                font-size: 2rem;
+                line-height: 1.5;
             }
 
             .section-title {
-                font-size: 3rem;
+                font-size: 2.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .about-content,
+            .service-content,
+            .behind-content {
+                padding: 3rem 1.5rem;
+            }
+
+            .about-text,
+            .behind-text {
+                font-size: 0.95rem;
+                line-height: 1.8;
+            }
+
+            .about-image,
+            .service-image {
+                min-height: 350px;
+            }
+
+            .behind-image {
+                min-height: 350px;
+            }
+
+            .service-title {
+                font-size: 2.2rem;
+            }
+
+            .service-subtitle {
+                font-size: 0.95rem;
+            }
+
+            .service-list li {
+                font-size: 0.9rem;
+                padding: 0.8rem 0;
+            }
+
+            .service-tagline {
+                font-size: 1.8rem;
+                margin-top: 3rem;
+                padding: 0 1rem;
+            }
+
+            .services-section {
+                padding: 5rem 1rem;
+            }
+
+            .contact-section {
+                padding: 5rem 1.5rem;
+            }
+
+            .contact-title {
+                font-size: 2.5rem;
             }
 
             .form-row {
                 grid-template-columns: 1fr;
             }
 
-            .quote-section,
-            .services-section,
-            .behind-section,
-            .contact-section {
-                padding: 4rem 2rem;
+            .form-input,
+            .form-textarea {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .form-submit,
+            .cta-button {
+                width: 100%;
+                text-align: center;
+                padding: 1.2rem 2rem;
+            }
+
+            .contact-container {
+                gap: 3rem;
+            }
+
+            footer {
+                padding: 3rem 1.5rem;
+            }
+
+            .footer-content {
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                font-size: 0.75rem;
+            }
+
+            .footer-bottom p {
+                margin-bottom: 0.8rem;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .logo {
+                height: 30px;
+            }
+
+            .hero-title {
+                max-width: 240px;
+            }
+
+            .quote {
+                font-size: 1.6rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .behind-title,
+            .contact-title {
+                font-size: 2.2rem;
+            }
+
+            .service-title {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
     <!-- Navigation -->
     <nav id="nav">
         <div class="logo">
             <img src="hh transparent.png" alt="Halo House">
         </div>
-        <ul class="nav-links">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
             <li><a href="#services">Services</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -822,6 +1067,9 @@
 
     <!-- Behind Section -->
     <section class="behind-section" id="behind">
+        <div class="behind-image">
+            <!-- Background image set in CSS -->
+        </div>
         <div class="behind-content">
             <h2 class="behind-title">Behind Halo House</h2>
             <p class="behind-text">Carly and Hayley are visionary sisters and the family owners of Sorella, known for creating weddings that feel effortlessly elegant and deeply personal. Drawing on years of experience running events on their own property, they have developed a reputation for transforming any space into a breathtaking celebration while flawlessly managing even the most complex details. Celebrated for their distinctive design sensibility and thoughtful approach, they specialize in creating highly curated, boutique weddings that reflect each couple's unique style and story. With a calm, attentive presence, Carly and Hayley are trusted by couples who want their wedding day to feel seamless, inspired, and unforgettable...down to the very last touch.</p>
@@ -909,6 +1157,10 @@
             </div>
         </div>
         <div class="footer-bottom">
+            <p style="margin-bottom: 1rem; font-size: 0.85rem; opacity: 0.8;">
+                Photos taken by <a href="https://instagram.com/tymaragoldwin_photography" target="_blank" style="color: rgba(255, 255, 255, 0.9); text-decoration: none; transition: color 0.3s ease;">@tymaragoldwin_photography</a> |
+                Video taken by <a href="https://instagram.com/ahmedsrathore" target="_blank" style="color: rgba(255, 255, 255, 0.9); text-decoration: none; transition: color 0.3s ease;">@ahmedsrathore</a>
+            </p>
             <p>&copy; 2026 Halo House Events. All rights reserved.</p>
         </div>
     </footer>
@@ -931,6 +1183,45 @@
                 nav.classList.add('scrolled');
             } else {
                 nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.getElementById('navLinks');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const body = document.body;
+
+        function toggleMobileMenu() {
+            const isActive = navLinks.classList.contains('active');
+            mobileMenuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        }
+
+        function closeMobileMenu() {
+            mobileMenuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+
+        // Close mobile menu when clicking a link
+        const navLinkItems = navLinks.querySelectorAll('a');
+        navLinkItems.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Close mobile menu when clicking overlay
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                closeMobileMenu();
             }
         });
 
